@@ -23,7 +23,7 @@ export default function Login(props)
 
 		let body = JSON.parse(response.text);
 
-		if(response.status != 200) return alert(body.message);
+		if(response.status !== 200) return alert(body.message);
 
 		localStorage.setItem('user', response.text);
 
