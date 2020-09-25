@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Api from '../../Services/Api'
 
 export default function Login(props)
@@ -13,32 +13,126 @@ export default function Login(props)
 
 	const handleLogin = async (event) =>
 	{
-		if(!email || !password)
-			return alert('Preencha os campos!');
+		try
+		{
+			let response = await Api.post('/login', { email, password });
 
-		let response = await Api.post('/login', { email, password });
-		
-		if(!response)
-			return alert('Houve um erro!');
+			if(response.status !== 200)
+				return window.md.showNotification({
+					title: 'Ops!',
+					message: response.body.message,
+					color: 'warning'
+				});
 
-		let body = JSON.parse(response.text);
+			localStorage.setItem('user', response.text);
 
-		if(response.status !== 200) return alert(body.message);
-
-		localStorage.setItem('user', response.text);
-
-		history.push('/');
+			history.push('/');
+		}
+		catch(e)
+		{
+			return window.md.showNotification({
+					title: 'Eita!',
+					message: e.message,
+					color: 'danger'
+				});
+		}
 	}
 
+	useEffect(() =>
+	{
+		if(localStorage.getItem('user'))
+			history.push('/');
+
+		return;
+	})
+
 	return(
-		<div>
-			
-			<input type="email" onChange={ handleEmail } />
 
-			<input type="password" onChange={ handlePassword } />
+		<div className="row">
 
-			<button type="button" onClick={ handleLogin }>Entrar</button>
+			<div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+
+				<div className="card card-login">
+					
+					<div className="card-header card-header-warning text-center">
+
+						<h4 className="card-title">Entrar</h4>
+
+						<div className="social-line">
+
+							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+								<i className="fa fa-facebook-square"></i>
+							</a>
+
+							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+								<i className="fa fa-twitter"></i>
+							</a>
+
+							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+								<i className="fa fa-google-plus"></i>
+							</a>
+
+						</div>
+
+					</div>
+
+					<div className="card-body">
+
+						<p className="card-description text-center">Seja bem-vindo novamente!</p>
+
+						<div className="form-group">
+
+							<div className="input-group">
+
+								<div className="input-group-prepend">
+
+									<span className="input-group-text">
+
+										<i className="material-icons">email</i>
+
+									</span>
+
+								</div>
+
+								<input type="email" className="form-control" onChange={ handleEmail } placeholder="E-mail" />
+
+							</div>
+
+						</div>
+
+						<div className="form-group">
+
+							<div className="input-group">
+
+								<div className="input-group-prepend">
+
+									<span className="input-group-text">
+
+										<i className="material-icons">lock_outline</i>
+
+									</span>
+
+								</div>
+
+								<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<div className="card-footer justify-content-center">
+
+						<button className="btn btn-warning" type="button" onClick={ handleLogin }>Entrar</button>
+
+					</div>
+
+				</div>
+
+			</div>
 
 		</div>
+
 	);
 }
