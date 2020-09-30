@@ -15,7 +15,10 @@ export default function Login(props)
 	{
 		try
 		{
-			let response = await Api.post('/login', { email, password });
+			let response = await Api.post('/login', {
+				fields: { email, password },
+				header: ['Content-Type', 'application/json']
+			});
 
 			if(response.status !== 200)
 				return window.md.showNotification({
@@ -48,83 +51,87 @@ export default function Login(props)
 
 	return(
 
-		<div className="row">
+		<div className="container">
 
-			<div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+			<div className="row">
 
-				<div className="card card-login">
-					
-					<div className="card-header card-header-warning text-center">
+				<div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
 
-						<h4 className="card-title">Entrar</h4>
+					<div className="card card-login">
+						
+						<div className="card-header card-header-warning text-center">
 
-						<div className="social-line">
+							<h4 className="card-title">Entrar</h4>
 
-							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-								<i className="fa fa-facebook-square"></i>
-							</a>
+							<div className="social-line">
 
-							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-								<i className="fa fa-twitter"></i>
-							</a>
+								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+									<i className="fa fa-facebook-square"></i>
+								</a>
 
-							<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-								<i className="fa fa-google-plus"></i>
-							</a>
+								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+									<i className="fa fa-twitter"></i>
+								</a>
 
-						</div>
-
-					</div>
-
-					<div className="card-body">
-
-						<p className="card-description text-center">Seja bem-vindo novamente!</p>
-
-						<div className="form-group">
-
-							<div className="input-group">
-
-								<div className="input-group-prepend">
-
-									<span className="input-group-text">
-
-										<i className="material-icons">email</i>
-
-									</span>
-
-								</div>
-
-								<input type="email" className="form-control" onChange={ handleEmail } placeholder="E-mail" />
+								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
+									<i className="fa fa-google-plus"></i>
+								</a>
 
 							</div>
 
 						</div>
 
-						<div className="form-group">
+						<div className="card-body">
 
-							<div className="input-group">
+							<p className="card-description text-center">Seja bem-vindo novamente!</p>
 
-								<div className="input-group-prepend">
+							<div className="form-group">
 
-									<span className="input-group-text">
+								<div className="input-group">
 
-										<i className="material-icons">lock_outline</i>
+									<div className="input-group-prepend">
 
-									</span>
+										<span className="input-group-text">
+
+											<i className="material-icons">email</i>
+
+										</span>
+
+									</div>
+
+									<input type="email" className="form-control" onChange={ handleEmail } placeholder="E-mail" />
 
 								</div>
 
-								<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
+							</div>
+
+							<div className="form-group">
+
+								<div className="input-group">
+
+									<div className="input-group-prepend">
+
+										<span className="input-group-text">
+
+											<i className="material-icons">lock_outline</i>
+
+										</span>
+
+									</div>
+
+									<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
+
+								</div>
 
 							</div>
 
 						</div>
 
-					</div>
+						<div className="card-footer justify-content-center">
 
-					<div className="card-footer justify-content-center">
+							<button className="btn btn-warning" type="button" onClick={ handleLogin }>Entrar</button>
 
-						<button className="btn btn-warning" type="button" onClick={ handleLogin }>Entrar</button>
+						</div>
 
 					</div>
 

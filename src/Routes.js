@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { isAuthenticate } from './Auth'
 
 import Login from './app/views/Login/Login'
-import Dashboard from './app/views/Dashboard'
+import Dashboard from './app/views/Dashboard/Dashboard'
 
 export default function Routes()
 {
@@ -14,7 +14,7 @@ export default function Routes()
 
 				<Route exact path="/login" component={ Login } />
 
-				<PrivateRoute exact path="/" component={ Dashboard } />
+				<PrivateRoute path="/" component={ Dashboard } />
 
 			</Switch>
 
