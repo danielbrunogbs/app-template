@@ -3,12 +3,14 @@ import Api from '../../../Services/Api'
 
 export default function Users(props)
 {
+	const { history, user } = props;
+
 	const [users, setUsers] = useState([]);
 
 	useEffect(() =>
 	{
 		Api.get('/users', {
-			header: ['Authorization', props.item.user.token]
+			header: ['Authorization', user.token]
 		}).then(data => {
 
 			if(data.statusCode === 200)
@@ -36,12 +38,6 @@ export default function Users(props)
 		return;
 	}, [])
 
-	const handleDelete = (event) =>
-	{
-		console.log(event);
-		alert();
-	}
-
 	return(
 
 		<div className="row">
@@ -60,6 +56,10 @@ export default function Users(props)
 
 						<div className="table-responsive">
 
+							<button className="btn btn-success btn-sm" onClick={ () => history.push('/user/create') }>
+								Adicionar
+							</button>
+
 							<table className="table table-hover">
 
 								<thead className="text-dark">
@@ -70,7 +70,6 @@ export default function Users(props)
 										<th>E-mail</th>
 										<th>Tipo</th>
 										<th>CNPJ/CPF</th>
-										<th></th>
 
 									</tr>
 
@@ -89,9 +88,6 @@ export default function Users(props)
 													<td>{ register.email }</td>
 													<td>{ register.profile.description }</td>
 													<td>{ register.document }</td>
-													<td>
-														<div className="material-icons text-danger">delete_outline</div>
-													</td>
 
 												</tr>
 

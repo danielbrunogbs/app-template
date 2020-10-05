@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useLocation } from 'react-router-dom'
 
 import Account from './Components/Nav/Account'
 import Notification from './Components/Nav/Notification'
@@ -7,6 +7,7 @@ import Menu from './Components/Nav/Menu'
 
 //Pages
 import Users from './Users/Users'
+import CreateUser from './Users/CreateUser'
 
 export default function Dashboard(props)
 {
@@ -18,15 +19,21 @@ export default function Dashboard(props)
 		{
 			path: '/users',
 			page: Users,
-			slug: 'users.view',
-			user
+			slug: 'users.view'
+		},
+		{
+			path: '/user/create',
+			page: CreateUser,
+			slug: 'users.view'
 		}
 	]);
 
 	const Auth = (rest) =>
 	{
+		let query = new URLSearchParams(useLocation().search);
+
 		if(!rest.item.slug || user.permissions.find(register => register.slug === rest.item.slug))
-			return <rest.item.page { ...rest } />;
+			return <rest.item.page { ...rest } user={ user } params={ query } />;
 		else
 			return <h3>Desculpe, você não tem permissão para isso!</h3>;
 	}
