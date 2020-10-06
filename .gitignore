@@ -1,4 +1,4 @@
 node_modules/
-.env.js
+src/app/Services/config.json
 package-lock.json
 build

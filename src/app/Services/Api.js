@@ -1,10 +1,11 @@
 import superagent from 'superagent'
+import config from './config.json'
 
 function get(path, object = {})
 {
 	return new Promise((resolve, reject) => {
 
-		let get = superagent.get('http://localhost:8080' + path);
+		let get = superagent.get(config.API_URL + path);
 		
 		if(object.fields)
 			get.send(object.fields);
@@ -16,6 +17,7 @@ function get(path, object = {})
 			get.set(object.header[0], object.header[1]);
 
 		get.end((error, response) => resolve(response));
+
 	});
 }
 
@@ -23,7 +25,7 @@ function post(path, object = {})
 {
 	return new Promise((resolve, reject) => {
 
-		let post = superagent.post('http://localhost:8080' + path);
+		let post = superagent.post(config.API_URL + path);
 
 		if(object.fields)
 			post.send(object.fields);
@@ -35,6 +37,7 @@ function post(path, object = {})
 			post.set(object.header[0], object.header[1]);
 
 		post.end((error, response) => resolve(response));
+
 	});
 }
 
