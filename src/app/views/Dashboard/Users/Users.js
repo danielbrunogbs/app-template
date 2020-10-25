@@ -1,41 +1,48 @@
 import React, { useState, useEffect } from 'react'
 import Api from '../../../Services/Api'
 
+import Load from '../Components/Load'
+
 export default function Users(props)
 {
 	const { history, user } = props;
 
 	const [users, setUsers] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() =>
 	{
-		Api.get('/users', {
-			header: ['Authorization', user.token]
-		}).then(data => {
+		async function users()
+		{
+			try
+			{
+				setLoading(true);
 
-			if(data.statusCode === 200)
-				setUsers(data.body);
-			else
-				return window.md.showNotification({
-					title: 'Ops!',
-					message: data.body.message,
-					color: 'warning'
-				});
+				let response = await Api.get('/users', { header: ['Authorization', user.token] });
 
-		})
-		.catch(error => {
+				setLoading(false);
 
-			setUsers([]);
+				if(response.statusCode !== 200)
+					return window.notify({
+						title: 'Opa!',
+						message: response.body.message
+					}, 'warning');
 
-			return window.md.showNotification({
-				title: 'Eita!',
-				message: error.message,
-				color: 'danger'
-			});
+				setUsers(response.body);
+			}
+			catch(error)
+			{
+				return window.notify({
+					title: 'Eita!',
+					message: error.message
+				}, 'danger');
+			}
+		}
 
-		});
+		users();
 
 		return;
+
 	}, [])
 
 	return(
@@ -44,11 +51,23 @@ export default function Users(props)
 
 			<div className="col-md-12">
 
-				<div className="card">
+				<div className="card full-height">
 
 					<div className="card-header card-header-warning">
 
-						<h4 className="card-title">Usuários</h4>
+						<div className="card-title">
+						
+							Usuários
+
+							<div className="pull-right">
+							
+								<button className="btn btn-success btn-sm" onClick={ () => history.push('/user/create') }>
+									<i className="fas fa-plus-circle"></i> Adicionar
+								</button>
+
+							</div>
+
+						</div>
 
 					</div>
 
@@ -56,49 +75,49 @@ export default function Users(props)
 
 						<div className="table-responsive">
 
-							<button className="btn btn-success btn-sm" onClick={ () => history.push('/user/create') }>
-								Adicionar
-							</button>
+							<Load load={ loading }>
 
-							<table className="table table-hover">
+								<table className="table table-hover">
 
-								<thead className="text-dark">
+									<thead className="text-dark">
 
-									<tr>
+										<tr>
 
-										<th>Nome</th>
-										<th>E-mail</th>
-										<th>Tipo</th>
-										<th>CNPJ/CPF</th>
+											<th>Nome</th>
+											<th>E-mail</th>
+											<th>Tipo</th>
+											<th>CNPJ/CPF</th>
 
-									</tr>
+										</tr>
 
-								</thead>
+									</thead>
 
-								<tbody>
+									<tbody>
 
-									{
-										users.map(register => {
+										{
+											users.map(register => {
 
-											return(
+												return(
 
-												<tr key={ register._id }>
+													<tr key={ register._id }>
 
-													<td>{ register.name }</td>
-													<td>{ register.email }</td>
-													<td>{ register.profile.description }</td>
-													<td>{ register.document }</td>
+														<td>{ register.name }</td>
+														<td>{ register.email }</td>
+														<td>{ register.profile.description }</td>
+														<td>{ register.document }</td>
 
-												</tr>
+													</tr>
 
-											);
+												);
 
-										})
-									}
+											})
+										}
 
-								</tbody>
+									</tbody>
 
-							</table>
+								</table>
+
+							</Load>
 
 						</div>
 

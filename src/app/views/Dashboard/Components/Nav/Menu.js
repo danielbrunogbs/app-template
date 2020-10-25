@@ -5,14 +5,26 @@ export default function Menu(props)
 	const { user, history } = props;
 
 	const [menu] = useState([
+		
+		//Geral
 		{
 			title: 'Geral',
 			path: '/',
-			icon: 'dashboard'
+			icon: 'fas fa-home',
+			active: true
 		},
+
+		//Propostas
+		{
+			title: 'Propostas',
+			path: '/tenders',
+			icon: 'fas fa-book'
+		},
+
+		//Usuários
 		{
 			title: 'Usuários',
-			icon: 'person',
+			icon: 'fas fa-users',
 			slug: 'users.view',
 			submenu: [
 				{
@@ -21,6 +33,14 @@ export default function Menu(props)
 					slug: 'users.view'
 				}
 			]
+		},
+
+		//Clientes
+		{
+			title: 'Clientes',
+			icon: 'fas fa-user',
+			path: '/clients',
+			slug: 'users.view'
 		}
 	]);
 
@@ -30,7 +50,7 @@ export default function Menu(props)
 		history.push(path);
 	}
 
-	const populateMenu = (register, index) =>
+	const populateMenu = (register, index, submenu = false) =>
 	{
 		if(register.slug)
 		{
@@ -42,13 +62,13 @@ export default function Menu(props)
 
 		if(!register.submenu)
 		{
-			let content = (<li className="nav-item" key={ index }>
+			let content = (<li className={ !submenu ? register.active ? "nav-item active" : "nav-item" : "" } key={ index }>
 
-							<a className="nav-link" href="/" onClick={ (event) => goTo(register.path, event) }>
+							<a href="/" onClick={ (event) => goTo(register.path, event) }>
 
-								{ register.icon ? <i className="material-icons">{register.icon}</i> : null }
+								{ register.icon ? <i className={ register.icon }></i> : null }
 								
-								<p>{register.title}</p>
+								{ !submenu ? <p>{register.title}</p> : <span className="sub-item">{register.title}</span> }
 
 							</a>
 
@@ -58,22 +78,21 @@ export default function Menu(props)
 		}
 		else
 		{
-			let content = (<li className="nav-item" key={ index } >
+			let content = (<li className={ !submenu ? "nav-item" : null } key={ index } >
 
-							<a className="nav-link" data-toggle="collapse" href={ `#${register.title + index}` } aria-expanded="false">
+							<a data-toggle="collapse" href={ `#${register.title + index}` }>
 
-								<i className="material-icons">{register.icon}</i>
-								<p> {register.title}
-									<b className="caret"></b>
-								</p>
+								{ !submenu ? <i className={ register.icon }></i> : null }
+								<span className="sub-item">{register.title}</span>
+								<span className="caret"></span>
 
 							</a>
 
 							<div className="collapse" id={register.title + index}>
 
-								<ul className="nav">
+								<ul className="nav nav-collapse">
 
-									{ register.submenu.map((subRegister, subIndex) => populateMenu(subRegister, subIndex)) }
+									{ register.submenu.map((subRegister, subIndex) => populateMenu(subRegister, subIndex, true)) }
 
 								</ul>
 
@@ -89,7 +108,7 @@ export default function Menu(props)
 
 		<div>
 
-			<ul className="nav">
+			<ul className="nav nav-primary">
 
 				{
 					menu.map((register, index) => populateMenu(register, index))

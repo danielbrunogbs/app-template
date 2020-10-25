@@ -25,11 +25,27 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <link href="%PUBLIC_URL%/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+    <!-- Layout -->
+
+    <!-- Fonts and icons -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/webfont/webfont.min.js"></script>
+    
+    <script>
+      WebFont.load({
+        google: {"families":["Lato:300,400,700,900"]},
+        custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css']},
+        active: function() {
+          sessionStorage.fonts = true;
+        }
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/atlantis.min.css">
 
     <title>Dashboard</title>
+
   </head>
   <body>
 
@@ -48,45 +64,48 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
+    <!-- Layout -->
+
     <!--   Core JS Files   -->
-    <script src="%PUBLIC_URL%/assets/js/core/jquery.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/core/jquery.3.2.1.min.js"></script>
     <script src="%PUBLIC_URL%/assets/js/core/popper.min.js"></script>
-    <script src="%PUBLIC_URL%/assets/js/core/bootstrap-material-design.min.js"></script>
-    <script src="%PUBLIC_URL%/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <!-- Plugin for the momentJs  -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/moment.min.js"></script>
-    <!--  Plugin for Sweet Alert -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/sweetalert2.js"></script>
-    <!-- Forms Validations Plugin -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/jquery.validate.min.js"></script>
-    <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/jquery.bootstrap-wizard.js"></script>
-    <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/bootstrap-selectpicker.js"></script>
-    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
-    <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/jquery.dataTables.min.js"></script>
-    <!--  Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/bootstrap-tagsinput.js"></script>
-    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/jasny-bootstrap.min.js"></script>
-    <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/fullcalendar.min.js"></script>
-    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/jquery-jvectormap.js"></script>
-    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/nouislider.min.js"></script>
-    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-    <!-- Library for adding dinamically elements -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/arrive.min.js"></script>
-    <!-- Chartist JS -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/chartist.min.js"></script>
-    <!--  Notifications Plugin    -->
-    <script src="%PUBLIC_URL%/assets/js/plugins/bootstrap-notify.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="%PUBLIC_URL%/assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+    <script src="%PUBLIC_URL%/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+    <!-- Chart JS -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="%PUBLIC_URL%/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Atlantis JS -->
+    <script src="%PUBLIC_URL%/assets/js/atlantis.min.js"></script>
+
+    <!-- CUSTOM -->
+    <script src="%PUBLIC_URL%/assets/js/custom.js"></script>
 
   </body>
 </html>
