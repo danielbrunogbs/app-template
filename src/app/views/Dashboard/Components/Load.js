@@ -4,7 +4,7 @@ export default function Load(props)
 {
 	const { load, children } = props;
 
-	if(!load)
+	if(load === false)
 		return children;
 
 	return (

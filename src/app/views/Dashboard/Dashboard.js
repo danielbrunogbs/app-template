@@ -6,7 +6,7 @@ import Notification from './Components/Nav/Notification'
 import Menu from './Components/Nav/Menu'
 
 //Propostas
-import Tenders from './Tenders/Tenders'
+import Proposals from './Proposals/Proposals'
 
 //Usuários
 import Users from './Users/Users'
@@ -25,8 +25,8 @@ export default function Dashboard(props)
 
 		//Propostas
 		{
-			path: '/tenders',
-			page: Tenders,
+			path: '/proposals',
+			page: Proposals,
 			slug: 'users.view'
 		},
 
@@ -75,7 +75,7 @@ export default function Dashboard(props)
 
 	return(
 
-		<div className="wrapper">
+		<div className="wrapper sidebar_minimize">
 
 			<div className="main-header">
 

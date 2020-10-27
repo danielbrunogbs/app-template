@@ -3,65 +3,66 @@ import Api from '../../../Services/Api'
 
 import Load from '../Components/Load'
 
-export default function Users(props)
+export default function Proposals(props)
 {
-	const { history, user } = props;
+	const { user } = props;
 
-	const [users, setUsers] = useState([]);
+	const [proposals, setProposals] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() =>
 	{
-		async function users()
+
+		try
 		{
-			try
+			async function run()
 			{
 				setLoading(true);
 
-				let response = await Api.get('/users', { header: ['Authorization', user.token] });
+				let response = await Api.get('/proposals', {
+					header: ['Authorization', user.token]
+				});
 
 				setLoading(false);
 
 				if(response.statusCode !== 200)
 					return window.notify({
-						title: 'Opa!',
+						title: 'Ops!',
 						message: response.body.message
 					}, 'warning');
 
-				setUsers(response.body);
+				setProposals(response.body);
 			}
-			catch(error)
-			{
-				return window.notify({
-					title: 'Eita!',
-					message: error.message
-				}, 'danger');
-			}
+
+			run();
+		}
+		catch(e)
+		{
+			return window.notify({
+				title: 'Eita!',
+				message: e.message
+			}, 'danger');
 		}
 
-		users();
-
-		return;
-
-	}, [])
+	}, []);
 
 	return(
-
+		
 		<div className="row">
 
 			<div className="col-md-12">
 
-				<div className="card full-height">
+				<div className="card">
 
 					<div className="card-header card-header-warning">
 
 						<div className="card-title">
 						
-							Usuários
-
+							Propostas
+						
 							<div className="pull-right">
-							
-								<button className="btn btn-success btn-sm" onClick={ () => history.push('/user/create') }>
+
+								<button type="button" className="btn btn-success btn-sm" onClick={ () => alert('Em desenvolvimento') }>
 									<i className="fas fa-plus-circle"></i> Adicionar
 								</button>
 
@@ -73,9 +74,9 @@ export default function Users(props)
 
 					<div className="card-body">
 
-						<div className="table-responsive">
+						<Load load={ loading }>
 
-							<Load load={ loading }>
+							<div className="table-responsive">
 
 								<table className="table table-hover">
 
@@ -83,11 +84,10 @@ export default function Users(props)
 
 										<tr>
 
-											<th>Nome</th>
-											<th>E-mail</th>
-											<th>Tipo</th>
-											<th>CNPJ/CPF</th>
-											<th width="1">Bloquear</th>
+											<th width="1">Número</th>
+											<th>Descrição</th>
+											<th>Vendedor</th>
+											<th width="1">Detalhes</th>
 
 										</tr>
 
@@ -96,22 +96,19 @@ export default function Users(props)
 									<tbody>
 
 										{
-											users.map(register => {
+											proposals.map(register => {
 
 												return(
 
-													<tr key={ register._id }>
-
-														<td>{ register.name }</td>
-														<td>{ register.email }</td>
-														<td>{ register.profile.description }</td>
-														<td>{ register.document }</td>
+													<tr>
+														<td>{ register.proposed_number }</td>
+														<td>{ register.description }</td>
+														<td>{ register.salesman.name }</td>
 														<td align="center">
 															<button className="btn btn-info btn-sm" onClick={ () => alert('Em desenvolvimento') }>
-																<i className="fas fa-user-alt-slash"></i>
+																<i className="fas fa-eye"></i>
 															</button>
 														</td>
-
 													</tr>
 
 												);
@@ -123,9 +120,9 @@ export default function Users(props)
 
 								</table>
 
-							</Load>
+							</div>
 
-						</div>
+						</Load>
 
 					</div>
 

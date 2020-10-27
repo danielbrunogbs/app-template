@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Api from '../../../Services/Api'
 
+import Load from '../Components/Load'
+import ButtonLoad from '../Components/ButtonLoad'
+
 export default function CreateUser(props)
 {
 	const { user, history } = props;
@@ -14,6 +17,10 @@ export default function CreateUser(props)
 	const [passwordConfirm, setPasswordConfirm] = useState(null);
 	const [birth, setBirth] = useState(null);
 	const [profile, setProfile] = useState(null);
+	
+	//Loading's
+	const [loading, setLoading] = useState(false);
+	const [btnLoading, setBtnLoading] = useState(false);
 
 	const handleName = (event) => setName(event.target.value);
 	const handleDocument = (event) => setDocument(event.target.value);
@@ -25,40 +32,51 @@ export default function CreateUser(props)
 
 	const handleSend = async () =>
 	{
-		if(!name || !document || !email || !password || !passwordConfirm || !birth || !profile)
-			return window.md.showNotification({
-						title: 'Ops!',
-						message: 'É necessário preencher todos os campos!',
-						color: 'warning'
-					});
+		try
+		{
+			if(!name || !document || !email || !password || !passwordConfirm || !birth || !profile)
+				return window.notify({
+							title: 'Ops!',
+							message: 'É necessário preencher todos os campos!'
+						}, 'warning');
 
-		let response = await Api.post('/user', {
-			header: ['Authorization', user.token],
-			fields: {
-				name,
-				document,
-				email,
-				password,
-				password_confirm: passwordConfirm,
-				birth,
-				profile
-			}
-		});
+			setBtnLoading(true);
 
-		if(response.statusCode !== 200)
-			return window.md.showNotification({
-						title: 'Ops!',
-						message: response.body.message,
-						color: 'warning'
-					});
+			let response = await Api.post('/user', {
+				header: ['Authorization', user.token],
+				fields: {
+					name,
+					document,
+					email,
+					password,
+					password_confirm: passwordConfirm,
+					birth,
+					profile
+				}
+			});
 
-		window.md.showNotification({
-			title: 'Uhull!',
-			message: response.body.message,
-			color: 'success'
-		});
+			setBtnLoading(false);
 
-		return history.push('/users');
+			if(response.statusCode !== 200)
+				return window.notify({
+							title: 'Ops!',
+							message: response.body.message
+						}, 'warning');
+
+			window.notify({
+				title: 'Uhull!',
+				message: response.body.message
+			});
+
+			return history.push('/users');
+		}
+		catch(e)
+		{
+			return window.notify({
+				title: 'Eita!',
+				message: e.message
+			}, 'danger');
+		}
 	}
 
 	useEffect(() => {
@@ -67,7 +85,11 @@ export default function CreateUser(props)
 		{
 			try
 			{
+				setLoading(true);
+
 				let response = await Api.get('/profiles', { header: ['Authorization', user.token] });
+
+				setLoading(false);
 
 				if(response.statusCode !== 200)
 					return window.md.showNotification({
@@ -110,62 +132,71 @@ export default function CreateUser(props)
 
 					<div className="card-body">
 
-						<div className="row">
+						<Load load={ loading }>
 
-							<div className="col-md-6">
+							<div className="row">
 
-								<div className="form-group bmd-form-group">
-									<label className="bmd-label-floating">Nome</label>
-									<input type="text" className="form-control" onChange={ handleName } />
-								</div>
+								<div className="col-md-6">
 
-								<div className="form-group bmd-form-group">
-									<label className="bmd-label-floating">E-mail</label>
-									<input type="text" className="form-control" onChange={ handleEmail } />
-								</div>
+									<div className="form-group">
+										<label>Nome</label>
+										<input type="text" className="form-control" onChange={ handleName } />
+									</div>
 
-								<div className="form-group bmd-form-group">
-									<label className="">Data de Nascimento</label>
-									<input type="date" className="form-control" onChange={ handleBirth } />
-								</div>
+									<div className="form-group">
+										<label>E-mail</label>
+										<input type="text" className="form-control" onChange={ handleEmail } />
+									</div>
 
-								<select className="form-control" onChange={ handleProfile }>
+									<div className="form-group">
+										<label className="">Data de Nascimento</label>
+										<input type="date" className="form-control" onChange={ handleBirth } />
+									</div>
 
-									<option className="bs-title-option" value="">- Perfil -</option>
+									<div className="form-group">
+										
+										<label>Perfil</label>
+										
+										<select className="form-control" onChange={ handleProfile }>
 
-									{
-										profiles.map(item => <option key={ item._id } value={ item._id }>{ item.description }</option>)
-									}
+											<option value>- Selecione -</option>
+										
+											{
+												profiles.map(register => <option key={ register._id } value={ register._id }>{ register.description }</option>)
+											}
+
+										</select>
 									
-								</select>
+									</div>
+
+								</div>
+
+								<div className="col-md-6">
+
+									<div className="form-group">
+										<label>CPF/CNPJ</label>
+										<input type="text" className="form-control" onChange={ handleDocument } />
+									</div>
+
+									<div className="form-group ">
+										<label>Senha</label>
+										<input type="password" className="form-control" onChange={ handlePassword } />
+									</div>
+
+									<div className="form-group">
+										<label>Confirmar Senha</label>
+										<input type="password" className="form-control" onChange={ handlePasswordConfirm } />
+									</div>
+
+
+
+								</div>
 
 							</div>
 
-							<div className="col-md-6">
+							<ButtonLoad load={ btnLoading } className="btn btn-success btn-sm pull-right" onClick={ handleSend }>Cadastrar</ButtonLoad>
 
-								<div className="form-group bmd-form-group">
-									<label className="bmd-label-floating">CPF/CNPJ</label>
-									<input type="text" className="form-control" onChange={ handleDocument } />
-								</div>
-
-								<div className="form-group bmd-form-group">
-									<label className="bmd-label-floating">Senha</label>
-									<input type="password" className="form-control" onChange={ handlePassword } />
-								</div>
-
-								<div className="form-group bmd-form-group">
-									<label className="bmd-label-floating">Confirmar Senha</label>
-									<input type="password" className="form-control" onChange={ handlePasswordConfirm } />
-								</div>
-
-
-
-							</div>
-
-						</div>
-
-						<button type="button" className="btn btn-success pull-right" onClick={ handleSend }>Cadastrar</button>
-						<div className="clearfix"></div>
+						</Load>
 
 					</div>
 

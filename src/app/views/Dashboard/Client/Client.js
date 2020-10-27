@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Api from '../../../Services/Api'
+
 import Load from '../Components/Load'
+import ButtonLoad from '../Components/ButtonLoad'
 
 export default function Client(props)
 {
@@ -89,11 +91,11 @@ export default function Client(props)
 
 						<div className="card-footer">
 
-							<button className="btn btn-info btn-sm pull-right" type="button" onClick={ search }>
+							<ButtonLoad load={ loading } className="btn btn-info btn-sm pull-right" type="button" onClick={ search }>
 
 								Buscar
 
-							</button>
+							</ButtonLoad>
 
 						</div>
 

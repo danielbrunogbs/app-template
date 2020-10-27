@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Api from '../../Services/Api'
 
+import ButtonLoad from '../Dashboard/Components/ButtonLoad'
+
 export default function Login(props)
 {
 	const { history } = props;
 
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	const handleEmail = (event) => setEmail(event.target.value);
 	const handlePassword = (event) => setPassword(event.target.value);
@@ -15,17 +18,20 @@ export default function Login(props)
 	{
 		try
 		{
+			setLoading(true);
+
 			let response = await Api.post('/login', {
 				fields: { email, password },
 				header: ['Content-Type', 'application/json']
 			});
 
+			setLoading(false);
+
 			if(response.status !== 200)
-				return window.md.showNotification({
+				return window.notify({
 					title: 'Ops!',
-					message: response.body.message,
-					color: 'warning'
-				});
+					message: response.body.message
+				}, 'warning');
 
 			localStorage.setItem('user', response.text);
 
@@ -33,11 +39,10 @@ export default function Login(props)
 		}
 		catch(e)
 		{
-			return window.md.showNotification({
+			return window.notify({
 					title: 'Eita!',
-					message: e.message,
-					color: 'danger'
-				});
+					message: e.message
+				}, 'danger');
 		}
 	}
 
@@ -55,29 +60,13 @@ export default function Login(props)
 
 			<div className="row">
 
-				<div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+				<div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto" style={ { marginTop: '100px' } }>
 
-					<div className="card card-login">
+					<div className="card">
 						
-						<div className="card-header card-header-warning text-center">
+						<div className="card-header text-center">
 
-							<h4 className="card-title">Entrar</h4>
-
-							<div className="social-line">
-
-								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-									<i className="fa fa-facebook-square"></i>
-								</a>
-
-								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-									<i className="fa fa-twitter"></i>
-								</a>
-
-								<a href="#pablo" className="btn btn-just-icon btn-link btn-white">
-									<i className="fa fa-google-plus"></i>
-								</a>
-
-							</div>
+							<div className="card-title">Entrar</div>
 
 						</div>
 
@@ -93,7 +82,7 @@ export default function Login(props)
 
 										<span className="input-group-text">
 
-											<i className="material-icons">email</i>
+											<i className="fas fa-user"></i>
 
 										</span>
 
@@ -113,7 +102,7 @@ export default function Login(props)
 
 										<span className="input-group-text">
 
-											<i className="material-icons">lock_outline</i>
+											<i className="fas fa-lock"></i>
 
 										</span>
 
@@ -129,7 +118,11 @@ export default function Login(props)
 
 						<div className="card-footer justify-content-center">
 
-							<button className="btn btn-warning" type="button" onClick={ handleLogin }>Entrar</button>
+							<div className="pull-left">
+								<a href="/">Esqueceu a senha?</a>
+							</div>
+
+							<ButtonLoad load={ loading } className="btn btn-info btn-sm pull-right" onClick={ handleLogin }>Entrar</ButtonLoad>
 
 						</div>
 

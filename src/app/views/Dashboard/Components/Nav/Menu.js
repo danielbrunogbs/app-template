@@ -17,7 +17,7 @@ export default function Menu(props)
 		//Propostas
 		{
 			title: 'Propostas',
-			path: '/tenders',
+			path: '/proposals',
 			icon: 'fas fa-book'
 		},
 
