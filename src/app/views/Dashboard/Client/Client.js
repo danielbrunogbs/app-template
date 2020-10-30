@@ -76,7 +76,7 @@ export default function Client(props)
 							</div>
 
 						</div>
-
+                  <form onSubmitCapture={search}>
 						<div className="card-body">
 
 							<div className="form-group">
@@ -98,7 +98,7 @@ export default function Client(props)
 							</ButtonLoad>
 
 						</div>
-
+                  </form>
 					</div>
 
 				</div>
