@@ -14,10 +14,11 @@ export default function Client(props)
 
 	const cpf = (event) => setInput(event.target.value);
 
-	const search = async () =>
+	const search = async (event) =>
 	{
 		try
 		{
+            event.preventDefault();
 			if(input.length < 1)
 				return window.notify({
 					title: 'Ops!',
@@ -76,7 +77,7 @@ export default function Client(props)
 							</div>
 
 						</div>
-                  <form onSubmitCapture={search}>
+                    <form onSubmitCapture={search}>
 						<div className="card-body">
 
 							<div className="form-group">
