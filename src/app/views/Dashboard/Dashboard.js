@@ -263,14 +263,9 @@ export default function Dashboard(props)
 
 					<div className="panel-header bg-primary-gradient">
 
-						<div className="page-inner py-5">
+						<div className="page-inner py-4">
 
 							<div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-
-								<div>
-									<h2 className="text-white pb-2 fw-bold">Painel Administrativo</h2>
-									<h5 className="text-white op-7 mb-2">24/10/2020</h5>
-								</div>
 
 							</div>
 
@@ -301,9 +296,9 @@ export default function Dashboard(props)
 					<div className="container-fluid">
 
 						<div className="copyright ml-auto">
-							{ new Date().getFullYear() },
-							made with <i className="fa fa-heart heart text-danger"></i>
-							by <a href="https://www.themekita.com">ThemeKita</a>
+							{ new Date().getFullYear() } 
+							
+							<a href="https://www.gingaginanceira.com.br"> Ginga Financeira</a>
 						</div>		
 
 					</div>
