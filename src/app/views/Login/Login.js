@@ -18,6 +18,7 @@ export default function Login(props)
 	{
 		try
 		{
+			event.preventDefault();
 			setLoading(true);
 
 			let response = await Api.post('/login', {
@@ -95,7 +96,9 @@ export default function Login(props)
 							</div>
 
 							<div className="form-group">
-
+							
+							<form onSubmitCapture={handleLogin}>
+							
 								<div className="input-group">
 
 									<div className="input-group-prepend">
@@ -111,7 +114,9 @@ export default function Login(props)
 									<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
 
 								</div>
-
+							
+							</form>
+							
 							</div>
 
 						</div>
