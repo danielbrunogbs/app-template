@@ -71,65 +71,67 @@ export default function Login(props)
 
 						</div>
 
-						<div className="card-body">
+						<form action="" method="post" onSubmitCapture={handleLogin}>
 
-							<p className="card-description text-center">Seja bem-vindo novamente!</p>
+							<div className="card-body">
 
-							<div className="form-group">
+								<p className="card-description text-center">Seja bem-vindo novamente!</p>
 
-								<div className="input-group">
+								<div className="form-group">
 
-									<div className="input-group-prepend">
+									<div className="input-group">
 
-										<span className="input-group-text">
+										<div className="input-group-prepend">
 
-											<i className="fas fa-user"></i>
+											<span className="input-group-text">
 
-										</span>
+												<i className="fas fa-user"></i>
+
+											</span>
+
+										</div>
+
+										<input type="email" className="form-control" onChange={ handleEmail } placeholder="E-mail" />
 
 									</div>
 
-									<input type="email" className="form-control" onChange={ handleEmail } placeholder="E-mail" />
+								</div>
+
+								<div className="form-group">
+								
+									<div className="input-group">
+
+										<div className="input-group-prepend">
+
+											<span className="input-group-text">
+
+												<i className="fas fa-lock"></i>
+
+											</span>
+
+										</div>
+
+										<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
+
+									</div>
+								
+								</div>
+
+								<div className="form-group pull-left">
+									
+									<a href="/">Esqueceu a senha ?</a>
+								
+								</div>
+
+								<div className="form-group pull-right">
+
+									<ButtonLoad load={ loading } className="btn btn-info btn-sm" onClick={ handleLogin } type="submit">Entrar</ButtonLoad>
 
 								</div>
 
 							</div>
 
-							<div className="form-group">
-							
-							<form onSubmitCapture={handleLogin}>
-							
-								<div className="input-group">
-
-									<div className="input-group-prepend">
-
-										<span className="input-group-text">
-
-											<i className="fas fa-lock"></i>
-
-										</span>
-
-									</div>
-
-									<input type="password" className="form-control" onChange={ handlePassword } placeholder="Senha" />
-
-								</div>
-							
-							</form>
-							
-							</div>
-
-						</div>
-
-						<div className="card-footer justify-content-center">
-
-							<div className="pull-left">
-								<a href="/">Esqueceu a senha?</a>
-							</div>
-
-							<ButtonLoad load={ loading } className="btn btn-info btn-sm pull-right" onClick={ handleLogin }>Entrar</ButtonLoad>
-
-						</div>
+						</form>
 
 					</div>
 
