@@ -108,7 +108,7 @@ export default function Menu(props)
 
 		<div>
 
-			<ul className="nav nav-primary">
+			<ul className="nav nav-warning">
 
 				{
 					menu.map((register, index) => populateMenu(register, index))
