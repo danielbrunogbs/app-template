@@ -7,7 +7,7 @@ export default function ButtonLoad(props)
 	if(load)
 	{
 		return(
-			<button type="button" disabled={ true } { ...others }>
+			<button disabled={ true } { ...others }>
 
 				<div className="spinner-border spinner-border-sm" role="status">
 				  <span className="sr-only">Loading...</span>
@@ -17,5 +17,5 @@ export default function ButtonLoad(props)
 		);
 	}
 
-	return <button type="button" { ...others }>{ children }</button>;
+	return <button { ...others }>{ children }</button>;
 }

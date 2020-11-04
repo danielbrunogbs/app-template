@@ -77,29 +77,33 @@ export default function Client(props)
 							</div>
 
 						</div>
-                    <form onSubmitCapture={search}>
-						<div className="card-body">
 
-							<div className="form-group">
+						<form onSubmitCapture={search}>
 
-								<label>CPF</label>
+							<div className="card-body">
 
-								<input id="cpf" type="text" className="form-control" onChange={ cpf } />
+								<div className="form-group">
+
+									<label>CPF</label>
+
+									<input id="cpf" type="text" className="form-control" onChange={ cpf } />
+
+								</div>
+
+								<div className="form-group pull-right">
+
+									<ButtonLoad load={ loading } className="btn btn-info btn-sm" type="submit" onClick={ search }>
+
+										Buscar
+
+									</ButtonLoad>
+
+								</div>
 
 							</div>
 
-						</div>
-
-						<div className="card-footer">
-
-							<ButtonLoad load={ loading } className="btn btn-info btn-sm pull-right" type="button" onClick={ search }>
-
-								Buscar
-
-							</ButtonLoad>
-
-						</div>
-                  </form>
+                  		</form>
+					
 					</div>
 
 				</div>

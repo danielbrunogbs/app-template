@@ -79,7 +79,7 @@ export default function Dashboard(props)
 
 			<div className="main-header">
 
-				<div className="logo-header" data-background-color="blue">
+				<div className="logo-header" data-background-color="orange">
 
 					<button className="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon">
@@ -97,7 +97,7 @@ export default function Dashboard(props)
 
 				</div>
 
-				<nav className="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+				<nav className="navbar navbar-header navbar-expand-lg" data-background-color="orange2">
 					
 					<div className="container-fluid">
 
@@ -261,7 +261,7 @@ export default function Dashboard(props)
 
 				<div className="content">
 
-					<div className="panel-header bg-primary-gradient">
+					<div className="panel-header bg-warning-gradient">
 
 						<div className="page-inner py-4">
 
@@ -296,9 +296,13 @@ export default function Dashboard(props)
 					<div className="container-fluid">
 
 						<div className="copyright ml-auto">
-							{ new Date().getFullYear() } 
+
+							{ new Date().getFullYear() }
+
+							&copy;
 							
 							<a href="https://www.gingaginanceira.com.br"> Ginga Financeira</a>
+						
 						</div>		
 
 					</div>
