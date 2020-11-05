@@ -72,7 +72,7 @@ export default function StoreDetail(props)
 		if(salespeople.length < 1)
 			return(
 				<tr>
-					<td colspan="2">Não achamos nada por aqui =/</td>
+					<td colspan="2" align="center">Não achamos nada por aqui =/</td>
 				</tr>
 			);
 
@@ -91,7 +91,7 @@ export default function StoreDetail(props)
 		if(managers.length < 1)
 			return(
 				<tr>
-					<td colspan="2">Não achamos nada por aqui =/</td>
+					<td colspan="2" align="center">Não achamos nada por aqui =/</td>
 				</tr>
 			);
 

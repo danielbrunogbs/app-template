@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Load from '../Components/Load'
 import Api from '../../../Services/Api'
+import ButtonDelete from './Components/ButtonDelete'
 
 export default function Store(props)
 {
@@ -74,9 +75,9 @@ export default function Store(props)
 				</td>
 				
 				<td align="center">
-					<a href="/" className="btn btn-danger btn-sm">
-						<i className="fas fa-trash"></i>
-					</a>
+					
+					<ButtonDelete { ...props } stores={ stores } />
+
 				</td>
 			
 			</tr>
