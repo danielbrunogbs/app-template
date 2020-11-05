@@ -18,19 +18,32 @@ export default function Menu(props)
 		{
 			title: 'Propostas',
 			path: '/proposals',
-			icon: 'fas fa-book'
+			icon: 'fas fa-book',
+			slug: 'get/proposals'
+		},
+
+		//Loja
+		{
+			title: 'Lojas',
+			path: '/stores',
+			icon: 'fas fa-store',
+			slug: 'get/stores'
 		},
 
 		//Usuários
 		{
 			title: 'Usuários',
 			icon: 'fas fa-users',
-			slug: 'users.view',
 			submenu: [
 				{
 					title: 'Usuários',
 					path: '/users',
-					slug: 'users.view'
+					slug: 'get/users'
+				},
+				{
+					title: 'Perfis',
+					path: '/profiles',
+					slug: 'get/profiles'
 				}
 			]
 		},
@@ -40,7 +53,7 @@ export default function Menu(props)
 			title: 'Clientes',
 			icon: 'fas fa-user',
 			path: '/clients',
-			slug: 'users.view'
+			slug: 'get/client/:document'
 		}
 	]);
 

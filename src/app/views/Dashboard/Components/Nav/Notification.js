@@ -4,24 +4,63 @@ export default function Notification(props)
 {
 	return(
 
-		<li className="nav-item dropdown">
-		
-			<a className="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i className="material-icons">notifications</i>
-				<span className="notification">5</span>
-					<p className="d-lg-none d-md-block">
-					Some Actions
-				</p>
+		<li className="nav-item dropdown hidden-caret">
+			<a className="nav-link dropdown-toggle" href="/" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i className="fa fa-bell"></i>
+				<span className="notification">4</span>
 			</a>
-			
-			<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-				<a className="dropdown-item" href="/#">Mike John responded to your email</a>
-				<a className="dropdown-item" href="/#">You have 5 new tasks</a>
-				<a className="dropdown-item" href="/#">You're now friend with Andrew</a>
-				<a className="dropdown-item" href="/#">Another Notification</a>
-				<a className="dropdown-item" href="/#">Another One</a>
-			</div>
-
+			<ul className="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+				<li>
+					<div className="dropdown-title">You have 4 new notification</div>
+				</li>
+				<li>
+					<div className="notif-scroll scrollbar-outer">
+						<div className="notif-center">
+							<a href="/">
+								<div className="notif-icon notif-primary"> <i className="fa fa-user-plus"></i> </div>
+								<div className="notif-content">
+									<span className="block">
+										New user registered
+									</span>
+									<span className="time">5 minutes ago</span> 
+								</div>
+							</a>
+							<a href="/">
+								<div className="notif-icon notif-success"> <i className="fa fa-comment"></i> </div>
+								<div className="notif-content">
+									<span className="block">
+										Rahmad commented on Admin
+									</span>
+									<span className="time">12 minutes ago</span> 
+								</div>
+							</a>
+							<a href="/">
+								<div className="notif-img"> 
+									<img src="../assets/img/profile2.jpg" alt="Img Profile" />
+								</div>
+								<div className="notif-content">
+									<span className="block">
+										Reza send messages to you
+									</span>
+									<span className="time">12 minutes ago</span> 
+								</div>
+							</a>
+							<a href="/">
+								<div className="notif-icon notif-danger"> <i className="fa fa-heart"></i> </div>
+								<div className="notif-content">
+									<span className="block">
+										Farrah liked Admin
+									</span>
+									<span className="time">17 minutes ago</span> 
+								</div>
+							</a>
+						</div>
+					</div>
+				</li>
+				<li>
+					<a className="see-all" href="/">See all notifications<i className="fa fa-angle-right"></i> </a>
+				</li>
+			</ul>
 		</li>
 
 	);
