@@ -3,6 +3,7 @@ import Api from '../../../Services/Api'
 
 import Load from '../Components/Load'
 import ButtonLoad from '../Components/ButtonLoad'
+import ExportClient from './Components/ExportClient'
 
 export default function Client(props)
 {
@@ -73,6 +74,12 @@ export default function Client(props)
 							<div className="card-title">
 							
 								Consultar Cliente
+
+								<div className="pull-right">
+
+									<ExportClient { ...props } />
+
+								</div>
 
 							</div>
 
