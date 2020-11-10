@@ -14,6 +14,7 @@ import Proposals from './Proposals/Proposals'
 //Loja
 import Stores from './Stores/Stores'
 import StoreDetail from './Stores/StoreDetail'
+import StoreCreate from './Stores/StoreCreate'
 
 //Usuários
 import Users from './Users/Users'
@@ -56,6 +57,11 @@ export default function Dashboard(props)
 			component: StoreDetail,
 			slug: 'get/stores'
 		},
+		{
+			path: '/store/create',
+			component: StoreCreate,
+			slug: 'post/store'
+		},
 
 		//Usuários
 		{
@@ -94,13 +100,6 @@ export default function Dashboard(props)
 	}
 
 	const RouteAuth = ({ component, ...rest }) => <Route { ...rest } render={ renderProps => <Auth { ...renderProps } { ...rest } component={ component } /> } />;
-
-	const logout = (event) =>
-	{
-		event.preventDefault();
-		localStorage.removeItem('user');
-		history.push('/login');
-	}
 
 	return(
 

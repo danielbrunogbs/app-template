@@ -72,13 +72,13 @@ export default function StoreDetail(props)
 		if(salespeople.length < 1)
 			return(
 				<tr>
-					<td colspan="2" align="center">Não achamos nada por aqui =/</td>
+					<td colSpan={ 2 } align="center">Não achamos nada por aqui =/</td>
 				</tr>
 			);
 
 		return salespeople.map(register => (
 
-			<tr>
+			<tr key={ register._id }>
 				<td>{ register.name }</td>
 				<td className="document">{ register.document }</td>
 			</tr>
@@ -91,13 +91,13 @@ export default function StoreDetail(props)
 		if(managers.length < 1)
 			return(
 				<tr>
-					<td colspan="2" align="center">Não achamos nada por aqui =/</td>
+					<td colSpan={ 2 } align="center">Não achamos nada por aqui =/</td>
 				</tr>
 			);
 
 		return managers.map(register => (
 
-			<tr>
+			<tr key={ register._id }>
 				<td>{ register.name }</td>
 				<td className="document">{ register.document }</td>
 			</tr>

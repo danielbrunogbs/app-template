@@ -41,4 +41,24 @@ function post(path, object = {})
 	});
 }
 
-export default { get, post };
+function del(path, object = {})
+{
+	return new Promise((resolve, reject) => {
+
+		let post = superagent.del(config.API_URL + path);
+
+		if(object.fields)
+			post.send(object.fields);
+
+		if(object.headers)
+			object.headers.map(header => post.set(header[0], header[1]));
+
+		if(object.header)
+			post.set(object.header[0], object.header[1]);
+
+		post.end((error, response) => resolve(response));
+
+	});
+}
+
+export default { get, post, del };

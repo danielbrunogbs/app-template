@@ -43,6 +43,8 @@ export default function Store(props)
 
 		run();
 
+		return;
+
 	}, []);
 
 	const Registers = () =>
@@ -51,14 +53,14 @@ export default function Store(props)
 			return(
 
 				<tr>
-					<td colspan="4" align="center">Não há nada por aqui =/</td>
+					<td colSpan={ 4 } align="center">Não há nada por aqui =/</td>
 				</tr>
 
 			);
 
 		return stores.map(register => (
 
-			<tr>
+			<tr key={ register._id }>
 				
 				<td>{ register.name }</td>
 
@@ -76,7 +78,7 @@ export default function Store(props)
 				
 				<td align="center">
 					
-					<ButtonDelete { ...props } stores={ stores } />
+					<ButtonDelete { ...props } setStores={ setStores } stores={ stores } id={ register._id } />
 
 				</td>
 			
@@ -101,7 +103,7 @@ export default function Store(props)
 
 						<div className="pull-right">
 
-							<button className="btn btn-success btn-sm" type="button" onClick={ () => alert('Em desenvolvimento') }>
+							<button className="btn btn-success btn-sm" type="button" onClick={ () => history.push('/store/create') }>
 								<i className="fas fa-plus-circle"></i> Adicionar
 							</button>
 
