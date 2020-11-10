@@ -1,3 +1,18 @@
+function loadMasks()
+{
+	$('.document').mask((value) => {
+
+		if(value.length <= 11)
+			return '000.000.000-00';
+
+		if(value.length <= 14)
+			return '00.000.000/0000-00';
+
+	});
+
+	$('.zip_code').mask('00000-000');
+}
+
 function notify(content = {}, state = 'success')
 {
 	switch(state)

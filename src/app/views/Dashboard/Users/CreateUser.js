@@ -92,11 +92,10 @@ export default function CreateUser(props)
 				setLoading(false);
 
 				if(response.statusCode !== 200)
-					return window.md.showNotification({
+					return window.notify({
 						title: 'Ops!',
-						message: response.body.message,
-						color: 'warning'
-					});
+						message: response.body.message
+					}, 'warning');
 
 				setProfiles(response.body);
 			}
@@ -104,11 +103,10 @@ export default function CreateUser(props)
 			{
 				setProfiles([]);
 
-				return window.md.showNotification({
+				return window.notify({
 					title: 'Eita!',
-					message: error.message,
-					color: 'danger'
-				});
+					message: error.message
+				}, 'danger');
 			}
 		}
 
