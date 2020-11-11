@@ -2,24 +2,26 @@ import React, { useState } from 'react'
 
 import ButtonLoad from '../../Components/ButtonLoad'
 import Api from '../../../../Services/Api'
+import moment from 'moment'
 
 export default function ExportClient(props)
 {
 	const { user } = props;
 
 	const [registers, setRegisters] = useState(0);
+	const [link, setLink] = useState();
 
 	const [loading, setLoading] = useState(false);
 
 	const handleRegisters = (event) => setRegisters(event.target.value);
 
-	const handleExport = async () =>
+	const handleExport = async (event) =>
 	{
 		try
 		{
 			setLoading(true);
 
-			let response = await Api.get('/clients/export', {
+			let response = await Api.get('/clients/export?range=' + registers, {
 				header: ['Authorization', user.token]
 			});
 
@@ -31,7 +33,12 @@ export default function ExportClient(props)
 					message: response.body.message
 				}, 'warning');
 
-			return response.body;
+			let blob = new Blob([response.text], { type: response.header['content-type'] });
+			let url = URL.createObjectURL(blob);
+			
+			let filename = 'clientes_' + moment().format('YYYY_MM_DD_HH_mm_ss') + '.csv';
+
+			setLink(<a href={ url } download={ filename } onClick={ () => setLink() } className="btn btn-sm btn-success text-white">Download</a>);
 		}
 		catch(e)
 		{
@@ -50,7 +57,7 @@ export default function ExportClient(props)
 				Exportar
 			</button>
 
-			<div className="modal fade" id="exportClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div className="modal fade" id="exportClient" tabIndex={ -1 } role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				
 				<div className="modal-dialog" role="document">
 				
@@ -76,7 +83,7 @@ export default function ExportClient(props)
 
 										<label>Range inicial</label>
 
-										<input type="number" className="form-control" min="1" />
+										<input type="number" onChange={ handleRegisters } value={ registers } className="form-control" min="1" />
 
 									</div>
 
@@ -87,8 +94,10 @@ export default function ExportClient(props)
 						</div>
 
 						<div className="modal-footer">
+
+							{ link }
 							
-							<ButtonLoad load={ loading } type="button" className="btn btn-sm btn-success">
+							<ButtonLoad load={ loading } onClick={ handleExport } type="button" className="btn btn-sm btn-info">
 								Exportar
 							</ButtonLoad>
 						
