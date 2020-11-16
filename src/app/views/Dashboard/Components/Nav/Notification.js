@@ -7,7 +7,7 @@ export default function Notification(props)
 		<li className="nav-item dropdown hidden-caret">
 			<a className="nav-link dropdown-toggle" href="/" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i className="fa fa-bell"></i>
-				<span className="notification">5</span>
+				<span className="notification">6</span>
 			</a>
 			<ul className="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
 				<li>
