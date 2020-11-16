@@ -8,12 +8,14 @@ export default function ExportClient(props)
 {
 	const { user } = props;
 
-	const [registers, setRegisters] = useState(0);
+	const [rangeInitial, setRangeInitial] = useState(0);
+	const [rangeFinal, setRangeFinal] = useState(0);
 	const [link, setLink] = useState();
 
 	const [loading, setLoading] = useState(false);
 
-	const handleRegisters = (event) => setRegisters(event.target.value);
+	const handleRangeInitial = (event) => setRangeInitial(event.target.value);
+	const handleRangeFinal = (event) => setRangeFinal(event.target.value);
 
 	const handleExport = async (event) =>
 	{
@@ -21,7 +23,7 @@ export default function ExportClient(props)
 		{
 			setLoading(true);
 
-			let response = await Api.get('/clients/export?range=' + registers, {
+			let response = await Api.get(`/clients/export?initial=${rangeInitial}&final=${rangeFinal}`, {
 				header: ['Authorization', user.token]
 			});
 
@@ -83,7 +85,15 @@ export default function ExportClient(props)
 
 										<label>Range inicial</label>
 
-										<input type="number" onChange={ handleRegisters } value={ registers } className="form-control" min="1" />
+										<input type="number" onChange={ handleRangeInitial } className="form-control" min="1" />
+
+									</div>
+
+									<div className="form-group">
+
+										<label>Range final</label>
+
+										<input type="number" onChange={ handleRangeFinal } className="form-control" max="50000" />
 
 									</div>
 
