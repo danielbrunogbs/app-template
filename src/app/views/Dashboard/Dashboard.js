@@ -10,6 +10,7 @@ import Home from './Home/Home'
 
 //Propostas
 import Proposals from './Proposals/Proposals'
+import CreateProposal from './Proposals/CreateProposal'
 
 //Loja
 import Stores from './Stores/Stores'
@@ -44,6 +45,11 @@ export default function Dashboard(props)
 			path: '/proposals',
 			component: Proposals,
 			slug: 'get/proposals'
+		},
+		{
+			path: '/proposal/create',
+			component: CreateProposal,
+			slug: 'post/proposal'
 		},
 
 		//Lojas

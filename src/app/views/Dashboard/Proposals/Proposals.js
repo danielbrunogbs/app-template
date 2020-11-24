@@ -5,7 +5,7 @@ import Load from '../Components/Load'
 
 export default function Proposals(props)
 {
-	const { user } = props;
+	const { user, history } = props;
 
 	const [proposals, setProposals] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -62,7 +62,7 @@ export default function Proposals(props)
 						
 							<div className="pull-right">
 
-								<button type="button" className="btn btn-success btn-sm" onClick={ () => alert('Em desenvolvimento') }>
+								<button type="button" className="btn btn-success btn-sm" onClick={ () => history.push('/proposal/create') }>
 									<i className="fas fa-plus-circle"></i> Adicionar
 								</button>
 
@@ -100,7 +100,7 @@ export default function Proposals(props)
 
 												return(
 
-													<tr>
+													<tr key={ register._id }>
 														<td>{ register.proposed_number }</td>
 														<td>{ register.description }</td>
 														<td>{ register.salesman.name }</td>
