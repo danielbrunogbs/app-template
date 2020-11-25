@@ -103,7 +103,7 @@ export default function Proposals(props)
 													<tr key={ register._id }>
 														<td>{ register.proposed_number }</td>
 														<td>{ register.description }</td>
-														<td>{ register.salesman.name }</td>
+														<td>{ register.salespeople.name }</td>
 														<td align="center">
 															<button className="btn btn-info btn-sm" onClick={ () => alert('Em desenvolvimento') }>
 																<i className="fas fa-eye"></i>
