@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Api from '../../../Services/Api'
-
+import moment from 'moment'
 import Load from '../Components/Load'
 
 export default function Proposals(props)
@@ -35,6 +35,8 @@ export default function Proposals(props)
 			}
 
 			run();
+			window.$('.document').mask('000.000.000-00');
+			return;
 		}
 		catch(e)
 		{
@@ -84,9 +86,15 @@ export default function Proposals(props)
 
 										<tr>
 
-											<th width="1">Número</th>
-											<th>Descrição</th>
-											<th>Vendedor</th>
+											<th>Data</th>
+											<th>Promotor</th>
+											<th>Loja</th>
+											<th>Banco</th>
+											<th>Operação</th>
+											<th>Cliente</th>
+											<th>CPF</th>
+											<th>Liberado</th>
+											<th>Status</th>
 											<th width="1">Detalhes</th>
 
 										</tr>
@@ -101,9 +109,16 @@ export default function Proposals(props)
 												return(
 
 													<tr key={ register._id }>
-														<td>{ register.proposed_number }</td>
-														<td>{ register.description }</td>
-														<td>{ register.salespeople.name }</td>
+														<td align="left">{ moment(register.date).format('DD/MM/YYYY') }</td>
+														<td>{ register.promoter.description }</td>
+														<td>{ register.store.name }</td>
+														<td>{ register.bank.long_name }</td>
+														<td>{ register.operation.description }</td>
+														<td>{ register.client.name }</td>
+														<td><span className="document">{ register.client.document }</span></td>
+														<td>{ register.amount_released.toFixed(2).replace('.',',') }</td>
+														<td>{ register.proposed_situation.description }</td>
+														
 														<td align="center">
 															<button className="btn btn-info btn-sm" onClick={ () => alert('Em desenvolvimento') }>
 																<i className="fas fa-eye"></i>
