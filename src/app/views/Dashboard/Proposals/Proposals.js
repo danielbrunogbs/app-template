@@ -120,7 +120,7 @@ export default function Proposals(props)
 														<td>{ register.proposed_situation.description }</td>
 														
 														<td align="center">
-															<button className="btn btn-info btn-sm" onClick={ () => alert('Em desenvolvimento') }>
+															<button className="btn btn-info btn-sm" onClick={ () => history.push('/proposal/detail?id=' + register._id) }>
 																<i className="fas fa-eye"></i>
 															</button>
 														</td>

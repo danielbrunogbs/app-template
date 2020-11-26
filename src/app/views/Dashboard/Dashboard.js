@@ -11,6 +11,7 @@ import Home from './Home/Home'
 //Propostas
 import Proposals from './Proposals/Proposals'
 import CreateProposal from './Proposals/CreateProposal'
+import ProposalDetail from './Proposals/ProposalDetail'
 
 //Loja
 import Stores from './Stores/Stores'
@@ -50,6 +51,11 @@ export default function Dashboard(props)
 			path: '/proposal/create',
 			component: CreateProposal,
 			slug: 'post/proposal'
+		},
+		{
+			path: '/proposal/detail',
+			component: ProposalDetail,
+			slug: 'get/proposals'
 		},
 
 		//Lojas
