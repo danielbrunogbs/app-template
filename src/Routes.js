@@ -22,14 +22,19 @@ export default function Routes()
 	);
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route { ...rest } render={ props =>
+const PrivateRoute = ({ component: Component, ...rest }) => 
+{
+	isAuthenticate();
 
-		isAuthenticate() ? (
-			<Component { ...props } />
-		) : (
-			<Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-		)
+	return(
+		<Route { ...rest } render={ props =>
 
-	} />
-);
+			!localStorage.getItem('user') ? (
+				<Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+			) : (
+				<Component { ...props } />
+			)
+
+		} />
+	);
+}

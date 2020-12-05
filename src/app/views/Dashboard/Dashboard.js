@@ -4,6 +4,7 @@ import { Route, Switch, useLocation } from 'react-router-dom'
 import Account from './Components/Nav/Account'
 import Notification from './Components/Nav/Notification'
 import Menu from './Components/Nav/Menu'
+import NotPermission from './Components/NotPermission'
 
 //Home
 import Home from './Home/Home'
@@ -38,7 +39,7 @@ export default function Dashboard(props)
 		{
 			path: '/',
 			component: Home,
-			exact: '/'
+			exact: true
 		},
 
 		//Propostas
@@ -108,7 +109,7 @@ export default function Dashboard(props)
 		if(!rest.slug || user.permissions.find(register => register.slug === rest.slug))
 			return <rest.component { ...rest } user={ user } params={ query } />;
 		else
-			return <h3>Desculpe, você não tem permissão para isso!</h3>;
+			return <NotPermission />;
 	}
 
 	const RouteAuth = ({ component, ...rest }) => <Route { ...rest } render={ renderProps => <Auth { ...renderProps } { ...rest } component={ component } /> } />;

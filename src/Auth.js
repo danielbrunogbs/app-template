@@ -1,13 +1,21 @@
-// import Api from './app/Services/Api'
+import Api from './app/Services/Api'
 
-export const isAuthenticate = () =>
+export const isAuthenticate = async () =>
 {
-	let token = localStorage.getItem('user');
+	let user = localStorage.getItem('user');
 
-	if(token === null)
-		return false;
+	if(!user)
+		window.location.href = '/login';
 
-	//Implementar a validação de duração do token
+	/* Checa se pode prosseguir com a sessão */
 
-	return true;
+	let response = await Api.get('/auth/check', {
+		header: ['Authorization', JSON.parse(user).token]
+	});
+
+	if(response.body.logout)
+	{
+		localStorage.removeItem('user');
+		window.location.href = '/login';
+	}
 }
