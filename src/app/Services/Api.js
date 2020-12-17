@@ -13,6 +13,9 @@ function get(path, object = {})
 		if(object.headers)
 			object.headers.map(header => get.set(header[0], header[1]));
 
+		if(object.queries)
+			object.queries.map(query => get.query(query));
+
 		if(object.header)
 			get.set(object.header[0], object.header[1]);
 
@@ -33,6 +36,9 @@ function post(path, object = {})
 		if(object.headers)
 			object.headers.map(header => post.set(header[0], header[1]));
 
+		if(object.queries)
+			object.queries.map(query => get.query(query));
+
 		if(object.header)
 			post.set(object.header[0], object.header[1]);
 
@@ -52,6 +58,9 @@ function del(path, object = {})
 
 		if(object.headers)
 			object.headers.map(header => post.set(header[0], header[1]));
+
+		if(object.queries)
+			object.queries.map(query => get.query(query));
 
 		if(object.header)
 			post.set(object.header[0], object.header[1]);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Api from '../../../Services/Api'
 import moment from 'moment'
 import Load from '../Components/Load'
+import ProposalFilter from './Components/ProposalFilter'
 
 export default function Proposals(props)
 {
@@ -9,18 +10,19 @@ export default function Proposals(props)
 
 	const [proposals, setProposals] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [filters, setFilters] = useState([]);
 
 	useEffect(() =>
 	{
-
-		try
+		async function run()
 		{
-			async function run()
+			try
 			{
 				setLoading(true);
 
 				let response = await Api.get('/proposals', {
-					header: ['Authorization', user.token]
+					header: ['Authorization', user.token],
+					queries: filters
 				});
 
 				setLoading(false);
@@ -32,21 +34,23 @@ export default function Proposals(props)
 					}, 'warning');
 
 				setProposals(response.body);
+				
+				window.$('.document').mask('000.000.000-00');
 			}
-
-			run();
-			window.$('.document').mask('000.000.000-00');
-			return;
-		}
-		catch(e)
-		{
-			return window.notify({
-				title: 'Eita!',
-				message: e.message
-			}, 'danger');
+			catch(e)
+			{
+				return window.notify({
+					title: 'Eita!',
+					message: e.message
+				}, 'danger');
+			}
 		}
 
-	}, []);
+		run();
+
+		return;
+
+	}, [filters]);
 
 	return(
 		
@@ -63,6 +67,10 @@ export default function Proposals(props)
 							Propostas
 						
 							<div className="pull-right">
+
+								<ProposalFilter setFilters={ setFilters } user={ user } />
+
+								&ensp;
 
 								<button type="button" className="btn btn-success btn-sm" onClick={ () => history.push('/proposal/create') }>
 									<i className="fas fa-plus-circle"></i> Adicionar
