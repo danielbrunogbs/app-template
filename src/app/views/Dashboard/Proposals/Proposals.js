@@ -3,6 +3,7 @@ import Api from '../../../Services/Api'
 import moment from 'moment'
 import Load from '../Components/Load'
 import ProposalFilter from './Components/ProposalFilter'
+import ExportProposal from './Components/ExportProposal'
 
 export default function Proposals(props)
 {
@@ -68,12 +69,16 @@ export default function Proposals(props)
 						
 							<div className="pull-right">
 
+								<ExportProposal filters={ filters } user={ user } />
+
+								&ensp;
+
 								<ProposalFilter setFilters={ setFilters } user={ user } />
 
 								&ensp;
 
 								<button type="button" className="btn btn-success btn-sm" onClick={ () => history.push('/proposal/create') }>
-									<i className="fas fa-plus-circle"></i> Adicionar
+									<i className="fas fa-plus-circle"></i>
 								</button>
 
 							</div>

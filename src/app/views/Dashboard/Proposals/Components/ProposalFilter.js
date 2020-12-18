@@ -274,7 +274,7 @@ export default function ProposalFilter(props)
 		<span>
 
 			<button type="button" className="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
-				<i className="fas fa-filter"></i> Alterar Filtro
+				<i className="fas fa-filter"></i>
 			</button>
 
 			<div className="modal fade" id="exampleModal" tabIndex={ -1 } role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
