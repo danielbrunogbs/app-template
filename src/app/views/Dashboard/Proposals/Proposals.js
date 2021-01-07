@@ -4,6 +4,7 @@ import moment from 'moment'
 import Load from '../Components/Load'
 import ProposalFilter from './Components/ProposalFilter'
 import ExportProposal from './Components/ExportProposal'
+import Paginate from '../Components/Paginate'
 
 export default function Proposals(props)
 {
@@ -12,6 +13,12 @@ export default function Proposals(props)
 	const [proposals, setProposals] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [filters, setFilters] = useState([]);
+	const [page, setPage] = useState({
+		page: 1,
+		next_page: false,
+		prev_page: false,
+		page_amount: 0
+	});
 
 	useEffect(() =>
 	{
@@ -20,6 +27,8 @@ export default function Proposals(props)
 			try
 			{
 				setLoading(true);
+
+				filters.push({ page: page.page });
 
 				let response = await Api.get('/proposals', {
 					header: ['Authorization', user.token],
@@ -34,7 +43,14 @@ export default function Proposals(props)
 						message: response.body.message
 					}, 'warning');
 
-				setProposals(response.body);
+				setProposals(response.body.proposals);
+
+				page.page = response.body.page;
+				page.page_amount = response.body.page_amount;
+				page.next_page = response.body.next_page;
+				page.prev_page = response.body.prev_page;
+
+				setPage(page);
 				
 				window.$('.document').mask('000.000.000-00');
 			}
@@ -151,6 +167,12 @@ export default function Proposals(props)
 							</div>
 
 						</Load>
+
+					</div>
+
+					<div className="card-footer">
+
+						<Paginate object={ page } />
 
 					</div>
 
