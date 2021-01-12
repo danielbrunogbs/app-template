@@ -10,15 +10,13 @@ export default function Proposals(props)
 {
 	const { user, history } = props;
 
-	const [proposals, setProposals] = useState([]);
+	const [body, setBody] = useState({
+		proposals: []
+	});
+
 	const [loading, setLoading] = useState(false);
 	const [filters, setFilters] = useState([]);
-	const [page, setPage] = useState({
-		page: 1,
-		next_page: false,
-		prev_page: false,
-		page_amount: 0
-	});
+	const [page, setPage] = useState(1);
 
 	useEffect(() =>
 	{
@@ -28,11 +26,11 @@ export default function Proposals(props)
 			{
 				setLoading(true);
 
-				filters.push({ page: page.page });
-
 				let response = await Api.get('/proposals', {
 					header: ['Authorization', user.token],
-					queries: filters
+					queries: filters,
+					page,
+					page_amount: 1
 				});
 
 				setLoading(false);
@@ -43,14 +41,7 @@ export default function Proposals(props)
 						message: response.body.message
 					}, 'warning');
 
-				setProposals(response.body.proposals);
-
-				page.page = response.body.page;
-				page.page_amount = response.body.page_amount;
-				page.next_page = response.body.next_page;
-				page.prev_page = response.body.prev_page;
-
-				setPage(page);
+				setBody(response.body);
 				
 				window.$('.document').mask('000.000.000-00');
 			}
@@ -67,7 +58,7 @@ export default function Proposals(props)
 
 		return;
 
-	}, [filters]);
+	}, [filters, page]);
 
 	return(
 		
@@ -133,7 +124,7 @@ export default function Proposals(props)
 									<tbody>
 
 										{
-											proposals.map(register => {
+											body.proposals.map(register => {
 
 												return(
 
@@ -172,7 +163,7 @@ export default function Proposals(props)
 
 					<div className="card-footer">
 
-						<Paginate object={ page } />
+						<Paginate page={ page } setPage={ setPage } body={ body } />
 
 					</div>
 

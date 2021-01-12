@@ -16,6 +16,12 @@ function get(path, object = {})
 		if(object.queries)
 			object.queries.map(query => get.query(query));
 
+		if(object.page)
+			get.query({ page: object.page });
+
+		if(object.page_amount)
+			get.query({ page_amount: object.page_amount });
+
 		if(object.header)
 			get.set(object.header[0], object.header[1]);
 
@@ -39,6 +45,12 @@ function post(path, object = {})
 		if(object.queries)
 			object.queries.map(query => get.query(query));
 
+		if(object.page)
+			get.query({ page: object.page });
+
+		if(object.page_amount)
+			get.query({ page_amount: object.page_amount });
+
 		if(object.header)
 			post.set(object.header[0], object.header[1]);
 
@@ -61,6 +73,12 @@ function del(path, object = {})
 
 		if(object.queries)
 			object.queries.map(query => get.query(query));
+
+		if(object.page)
+			get.query({ page: object.page });
+
+		if(object.page_amount)
+			get.query({ page_amount: object.page_amount });
 
 		if(object.header)
 			post.set(object.header[0], object.header[1]);
