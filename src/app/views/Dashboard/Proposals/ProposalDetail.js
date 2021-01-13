@@ -42,9 +42,10 @@ export default function ProposalDetail(props)
 	const handleInputProduct = (event) => setInputProduct(event.target.value);
 	const handleInputOperation = (event) => setInputOperation(event.target.value);
 
-	const handleInputStore = (event) =>
+	const handleInputStore = (event, store = false) =>
 	{
-		let store = stores.find(register => register._id === event.target.value);
+		if(!store)
+			store = stores.find(register => register._id === event.target.value);
 
 		if(!store)
 		{
@@ -105,6 +106,8 @@ export default function ProposalDetail(props)
 
 	/* INPUT'S` */
 
+	/* EVENT'S` */
+
 	const handleSearchClient = async () =>
 	{
 		try
@@ -162,69 +165,7 @@ export default function ProposalDetail(props)
 		{
 			event.preventDefault();
 
-			Validate({
-				date: inputDate,
-				store: inputStore,
-				salespeople: inputSalesman,
-				bank: inputBank,
-				promoter: inputPromoter,
-				product: inputProduct,
-				operation: inputOperation,
-				benefit: inputBenefit,
-				proposal_number: inputNumberProposal,
-				contract_number: inputContractNumber,
-				funded_amount: inputFundedAmount,
-				debt_amount: inputDebtAmount,
-				amount_released: inputAmountReleased,
-				installment_value: inputInstallmentValue
-			});
-
-			setSubmitLoad(true);
-
-			let response = await Api.post('/proposal', {
-
-				headers: [
-					['Authorization', user.token],
-					['Content-Type', 'application/json']
-				],
-
-				fields: {
-					date: inputDate,
-					store: inputStore,
-					salespeople: inputSalesman,
-					salespeople_participation: inputSalesmanPart,
-					bank: inputBank,
-					promoter: inputPromoter,
-					product: inputProduct,
-					operation: inputOperation,
-					benefit: inputBenefit,
-					proposed_number: inputNumberProposal,
-					contract_number: inputContractNumber,
-					funded_amount: inputFundedAmount,
-					debt_amount: inputDebtAmount,
-					amount_released: inputAmountReleased,
-					installment_value: inputInstallmentValue,
-					portability: inputPortability,
-					client: inputClientId,
-					description: inputDescription
-				}
-
-			});
-
-			setSubmitLoad(false);
-
-			if(response.statusCode !== 200)
-				return window.notify({
-					title: 'Ops!',
-					message: response.body.message
-				}, 'warning');
-
-			window.notify({
-				title: 'Uhul!',
-				message: response.body.message
-			});
-
-			return history.push('/proposals');
+			//
 		}
 		catch(e)
 		{
@@ -234,6 +175,8 @@ export default function ProposalDetail(props)
 			}, 'danger');
 		}
 	}
+
+	/* EVENT'S` */
 
 	useEffect(() => {
 
@@ -247,7 +190,7 @@ export default function ProposalDetail(props)
 					header: ['Authorization', user.token]
 				});
 
-				let responseDetails = await Api.get('/proposals?_id='+params.get('id'), {
+				let responseDetails = await Api.get('/proposals/?_id=' + params.get('id'), {
 					header: ['Authorization', user.token]
 				});
 
@@ -259,40 +202,43 @@ export default function ProposalDetail(props)
 						message: response.body.message
 					}, 'warning');
 
+				let proposal = responseDetails.body.proposals[0];
+
 				setStores(response.body.stores);
 				setBanks(response.body.banks);
 				setPromoters(response.body.promoters);
 				setProducts(response.body.products);
 				setOperations(response.body.operations);
 
+				handleInputStore(null, proposal.store);
 
-				setInputDate(moment(responseDetails.body[0].date).format('YYYY-MM-DD'));
-				setInputStore(responseDetails.body[0].store._id);
-				setInputSalesman(responseDetails.body[0].salespeople._id);
+				setInputDate(moment(proposal.date).format('YYYY-MM-DD'));
+				setInputStore(proposal.store._id);
+				setInputSalesman(proposal.salespeople._id);
 
-				
+				if(proposal.salespeople_participation)
+					setInputSalesmanPart(proposal.salespeople_participation._id);
 
+				setInputBank(proposal.bank._id);
+				setInputPromoter(proposal.promoter._id);
+				setInputProduct(proposal.product._id);
+				setInputOperation(proposal.operation._id);
+				setInputCliente(proposal.client.document);
 
-				if (!responseDetails.body[0].salespeople_participation === null)				
-					setInputSalesmanPart(responseDetails.body[0].salespeople_participation._id);
+				setInputBenefit(proposal.client._id);
+				setInputNumberProposal(proposal.proposed_number);
+				setInputContractNumber(proposal.contract_number);
+				setInputFundedAmount(proposal.funded_amount);
+				setInputDebtAmount(proposal.debt_amount);
+				setInputAmountReleased(proposal.amount_released);
+				setInputInstallmentValue(proposal.installment_value);
+				setInputPortability(proposal.portability);
+				setInputDescription(proposal.description);
 
-				setInputBank(responseDetails.body[0].bank._id);
-				setInputPromoter(responseDetails.body[0].promoter._id);
-				setInputProduct(responseDetails.body[0].product._id);
-				setInputOperation(responseDetails.body[0].operation._id);
+				await handleSearchClient();
 
-				setInputCliente(responseDetails.body[0].client.document);
-				setInputNameClient(responseDetails.body[0].client.name);
-				setInputBenefit(responseDetails.body[0].benefit);
-				setInputNumberProposal(responseDetails.body[0].proposed_number);
-				setInputContractNumber(responseDetails.body[0].contract_number);
-				setInputFundedAmount(responseDetails.body[0].funded_amount);
-				setInputDebtAmount(responseDetails.body[0].debt_amount);
-				setInputAmountReleased(responseDetails.body[0].amount_released);
-				setInputInstallmentValue(responseDetails.body[0].installment_value);
-				setInputPortability(responseDetails.body[0].portability);
-				setInputDescription(responseDetails.body[0].description);
-
+				window.$('.amount').mask('#,00', { reverse: true });
+				window.$('.document').mask('000.000.000-00');
 			}
 			catch(e)
 			{
@@ -304,9 +250,6 @@ export default function ProposalDetail(props)
 		}
 
 		run();
-
-		window.$('.amount').mask('#,00', { reverse: true });
-		window.$('.document').mask('000.000.000-00');
 
 		return;
 
@@ -580,7 +523,7 @@ export default function ProposalDetail(props)
 										<label>Portabilidade</label>
 
 										<div className="custom-control custom-switch">
-											<input type="checkbox" className="custom-control-input" id="customSwitches" checked={ inputPortability }  onClick={ handleInputPortability } />
+											<input type="checkbox" className="custom-control-input" id="customSwitches" defaultChecked={ inputPortability }  onClick={ handleInputPortability } />
 											<label className="custom-control-label" htmlFor={ 'customSwitches' }></label>
 										</div>
 
@@ -610,7 +553,7 @@ export default function ProposalDetail(props)
 					</div>
 
 					<ButtonLoad className="btn btn-success btn-block" load={ submitLoad } type="submit">
-						Cadastrar
+						Atualizar
 					</ButtonLoad>
 					
 				</form>
