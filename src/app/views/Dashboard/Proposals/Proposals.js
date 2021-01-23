@@ -4,7 +4,7 @@ import moment from 'moment'
 import Load from '../Components/Load'
 import ProposalFilter from './Components/ProposalFilter'
 import ExportProposal from './Components/ExportProposal'
-import Paginate from '../Components/Paginate'
+import Pagination from '@material-ui/lab/Pagination'
 
 export default function Proposals(props)
 {
@@ -30,7 +30,7 @@ export default function Proposals(props)
 					header: ['Authorization', user.token],
 					queries: filters,
 					page,
-					page_amount: 1
+					page_amount: 50
 				});
 
 				setLoading(false);
@@ -163,7 +163,7 @@ export default function Proposals(props)
 
 					<div className="card-footer">
 
-						<Paginate page={ page } setPage={ setPage } body={ body } />
+						<Pagination page={ page } onChange={ (event, value) => setPage(value) } count={ body.pages } />
 
 					</div>
 
