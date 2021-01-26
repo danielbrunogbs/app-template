@@ -43,13 +43,13 @@ function post(path, object = {})
 			object.headers.map(header => post.set(header[0], header[1]));
 
 		if(object.queries)
-			object.queries.map(query => get.query(query));
+			object.queries.map(query => post.query(query));
 
 		if(object.page)
-			get.query({ page: object.page });
+			post.query({ page: object.page });
 
 		if(object.page_amount)
-			get.query({ page_amount: object.page_amount });
+			post.query({ page_amount: object.page_amount });
 
 		if(object.header)
 			post.set(object.header[0], object.header[1]);
@@ -72,13 +72,13 @@ function del(path, object = {})
 			object.headers.map(header => post.set(header[0], header[1]));
 
 		if(object.queries)
-			object.queries.map(query => get.query(query));
+			object.queries.map(query => post.query(query));
 
 		if(object.page)
-			get.query({ page: object.page });
+			post.query({ page: object.page });
 
 		if(object.page_amount)
-			get.query({ page_amount: object.page_amount });
+			post.query({ page_amount: object.page_amount });
 
 		if(object.header)
 			post.set(object.header[0], object.header[1]);
@@ -88,4 +88,33 @@ function del(path, object = {})
 	});
 }
 
-export default { get, post, del };
+function put(path, object = {})
+{
+	return new Promise((resolve, reject) => {
+
+		let post = superagent.put(config.API_URL + path);
+
+		if(object.fields)
+			post.send(object.fields);
+
+		if(object.headers)
+			object.headers.map(header => post.set(header[0], header[1]));
+
+		if(object.queries)
+			object.queries.map(query => post.query(query));
+
+		if(object.page)
+			post.query({ page: object.page });
+
+		if(object.page_amount)
+			post.query({ page_amount: object.page_amount });
+
+		if(object.header)
+			post.set(object.header[0], object.header[1]);
+
+		post.end((error, response) => resolve(response));
+
+	});
+}
+
+export default { get, post, del, put };

@@ -108,13 +108,15 @@ export default function ProposalDetail(props)
 
 	/* EVENT'S` */
 
-	const handleSearchClient = async () =>
+	const handleSearchClient = async (client = false) =>
 	{
 		try
 		{
 			setBtnLoading(true);
 
-			let response = await Api.get('/client/' + inputClient, {
+			client = client ? client : inputClient ;
+
+			let response = await Api.get('/client/' + client, {
 				header: ['Authorization', user.token]
 			});
 
@@ -165,7 +167,73 @@ export default function ProposalDetail(props)
 		{
 			event.preventDefault();
 
-			//
+			Validate({
+				date: inputDate,
+				store: inputStore,
+				salespeople: inputSalesman,
+				bank: inputBank,
+				promoter: inputPromoter,
+				product: inputProduct,
+				operation: inputOperation,
+				benefit: inputBenefit,
+				proposal_number: inputNumberProposal,
+				contract_number: inputContractNumber,
+				funded_amount: inputFundedAmount,
+				debt_amount: inputDebtAmount,
+				amount_released: inputAmountReleased,
+				installment_value: inputInstallmentValue
+			});
+
+			setSubmitLoad(true);
+
+			let response = await Api.put('/proposal', {
+
+				headers: [
+					['Authorization', user.token],
+					['Content-Type', 'application/json']
+				],
+
+				queries: [
+					{ id: params.get('id') }
+				],
+
+				fields: {
+					date: inputDate,
+					store: inputStore,
+					salespeople: inputSalesman,
+					salespeople_participation: inputSalesmanPart,
+					bank: inputBank,
+					promoter: inputPromoter,
+					product: inputProduct,
+					operation: inputOperation,
+					benefit: inputBenefit,
+					proposed_number: inputNumberProposal,
+					contract_number: inputContractNumber,
+					funded_amount: inputFundedAmount,
+					debt_amount: inputDebtAmount,
+					amount_released: inputAmountReleased,
+					installment_value: inputInstallmentValue,
+					portability: inputPortability,
+					client: inputClientId,
+					description: inputDescription
+				}
+
+			});
+
+			setSubmitLoad(false);
+
+			if(response.statusCode !== 200)
+				return window.notify({
+					title: 'Ops!',
+					message: response.body.message
+				}, 'warning');
+
+			window.notify({
+				title: 'Uhul!',
+				message: response.body.message
+			});
+
+			return history.push('/proposal/detail?id=' + params.get('id'));
 		}
 		catch(e)
 		{
@@ -235,7 +303,7 @@ export default function ProposalDetail(props)
 				setInputPortability(proposal.portability);
 				setInputDescription(proposal.description);
 
-				await handleSearchClient();
+				await handleSearchClient(proposal.client.document);
 
 				window.$('.amount').mask('#,00', { reverse: true });
 				window.$('.document').mask('000.000.000-00');
